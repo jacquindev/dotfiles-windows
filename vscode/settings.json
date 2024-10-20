@@ -1,0 +1,29 @@
+{
+    // editor
+    "editor.bracketPairColorization.enabled": true,
+    "editor.codeLens": true,
+    "editor.fontFamily": "'FantasqueSansM Nerd Font', 'JetBrainsMono Nerd Font', monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.formatOnSave": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.inlineSuggest.enabled": true,
+    "editor.lineHeight": 21,
+    "editor.minimap.enabled": false,
+    // workbench
+    "workbench.editor.labelFormat": "medium",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.sideBar.location": "left",
+    "workbench.panel.defaultLocation": "right",
+    //
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorStyleInactive": "line",
+    "terminal.integrated.cursorWidth": 1,
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.fontFamily": "'CodeNewRoman Nerd Font'",
+    // tabnine
+    "tabnine.experimentalAutoImports": true,
+    "powershell.buttons.showPanelMovementButtons": true,
+}

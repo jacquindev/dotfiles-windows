@@ -1,0 +1,32 @@
+[alias]
+    br = branch
+    cm = commit
+    co = checkout
+    st = status
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[am]
+    threeWay = true
+[core]
+    editor = code --wait
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[include]
+    path = ~/.gitconfig_local
+[help]
+    autocorrect = -1
+[log]
+    abbrevCommit = true
+    decorate = short
+[merge]
+    tool = code
+[mergetool "code"]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[pull]
+    ff = only
+[push]
+    default = current
+[rerere]
+    enabled = true
+    autoUpdate = true
