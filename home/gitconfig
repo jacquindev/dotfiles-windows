@@ -30,3 +30,11 @@
 [rerere]
     enabled = true
     autoUpdate = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = Jacquin Moon
+	email = jacquindev@outlook.com
