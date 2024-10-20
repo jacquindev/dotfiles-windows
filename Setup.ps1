@@ -26,9 +26,11 @@ Set-Location $PSScriptRoot
 $WingetApps = @(
     'chrisant996.Clink',
     'Git.Git',
+    'GitHub.GitHubDesktop',
     'JanDeDobbeleer.OhMyPosh',
     'Microsoft.PowerShell',
     'Microsoft.PowerToys',
+    "Microsoft.VisualStudioCode",
     'Ookla.Speedtest.Desktop',
     'Proton.ProtonVPN'
 )

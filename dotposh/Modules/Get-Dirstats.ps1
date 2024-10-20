@@ -76,7 +76,7 @@ function Get-Dirstats {
         else { $ThisDir | Add-Member -NotePropertyMembers @{LargestItemSize = [math]::round($LargestItemSize / 1MB, 8) } ; $ThisDir | Add-Member -NotePropertyMembers @{TotalSize = [math]::round($TotalLength / 1MB, 8) } } #Set to MB by default
     }
     Write-Progress -id 1 -Completed -Activity "Complete"
-    $AllItemsInCurrDir | Select-Object Mode, LastWriteTime, Name, DirCount, FileCount, TotalSize, LargestItemSize, LargestItem, Contents | Sort-Object TotalSize, FileCount, DirCount, Mode, Contents | Format-Table -AutoSize -Wrap
+    $AllItemsInCurrDir | Select-Object Mode, LastWriteTime, Name, DirCount, FileCount, TotalSize, LargestItemSize, LargestItem, Contents | Sort-Object TotalSize, FileCount, DirCount, Mode, Contents
 
     if ($Dir) { Set-Location $CurrDir }
 }
