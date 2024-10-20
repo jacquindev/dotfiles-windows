@@ -30,11 +30,6 @@ if (Get-Command gsudo -ErrorAction SilentlyContinue) {
     Import-Module "$($(Get-Item $(Get-Command gsudo.exe).Path).Directory.Parent.FullName)\current\gsudoModule.psd1"
 }
 
-# scoop module
-if (Get-Command scoop -ErrorAction SilentlyContinue) {
-    Import-Module "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.FullName)\modules\scoop-completion"
-}
-
 # Helper function to find dotfiles location
 function Find-DotfilesRepo {
     [CmdletBinding()]
@@ -73,3 +68,5 @@ if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
     }
     fastfetch
 }
+
+
