@@ -39,3 +39,19 @@ if (Get-Command npm -ErrorAction SilentlyContinue) {
     }
     Import-Module npm-completion
 }
+
+# docker
+if (Get-Command docker -ErrorAction SilentlyContinue) {
+    if (-not (Get-Module -ListAvailable -Name DockerCompletion)) {
+        Write-Host "Installing PowerShell Module DockerCompletion..." -ForegroundColor "Green"
+        Install-Module DockerCompletion -Scope CurrentUser -Force
+    }
+    Set-Alias -Name 'd' -Value 'docker'
+    Import-Module DockerCompletion
+}
+
+# kubectl
+if (Get-Command kubectl -ErrorAction SilentlyContinue) {
+    Set-Alias -Name 'k' -Value 'kubectl'
+    kubectl completion powershell | Out-String | Invoke-Expression
+}
