@@ -4,3 +4,6 @@
 [submodule "clink/clink-completions"]
 	path = clink/clink-completions
 	url = https://github.com/vladimir-kotikov/clink-completions
+[submodule "dotposh/Config/kubectl-aliases-powershell"]
+	path = dotposh/Config/kubectl-aliases-powershell
+	url = https://github.com/shanoor/kubectl-aliases-powershell.git
