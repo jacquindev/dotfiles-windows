@@ -2,7 +2,7 @@
 .SYNOPSIS
     Setup dotfiles repos and install applications
 .DESCRIPTION
-    !! This script requires running on 'Developer Mode'
+    !! This script requires running on 'Developer Mode' !!
     For more information, please check the link below:
         - https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
 #>
@@ -30,9 +30,10 @@ $WingetApps = @(
     'JanDeDobbeleer.OhMyPosh',
     'Microsoft.PowerShell',
     'Microsoft.PowerToys',
-    "Microsoft.VisualStudioCode",
+    'Microsoft.VisualStudioCode',
     'Ookla.Speedtest.Desktop',
-    'Proton.ProtonVPN'
+    'Proton.ProtonVPN',
+    'Spotify.Spotify'
 )
 $installedWingetApps = winget list | Out-String
 foreach ($app in $WingetApps) {
@@ -47,21 +48,21 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host 'Installing Scoop...' -ForegroundColor 'Green'
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-
     scoop bucket add extras
 }
 $ScoopApps = @(
     'aria2',
     'bat',
+    'eza',
     'fastfetch',
     'fd',
     'gsudo',
     'hyperfine',
     'innounp',
     'ripgrep',
-    'rustup',
     'scoop-completion',
     'speedtest-cli',
+    'spicetify-cli',
     'wixtoolset'
 )
 foreach ($app in $ScoopApps) {
