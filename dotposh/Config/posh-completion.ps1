@@ -1,3 +1,12 @@
+# Azure PowerShell
+if (Get-Module -ListAvailable -Name Az) {
+    if (-not (Get-Module -ListAvailable -Name Az.Tools.Predictor)) {
+        Write-Host "Installing PowerShell Module Az.Tools.Predictor..." -ForegroundColor "Green"
+        Install-Module -Name Az.Tools.Predictor -Scope CurrentUser -Force
+    }
+    Import-Module Az.Tools.Predictor
+}
+
 # winget
 if (Get-Command winget -ErrorAction SilentlyContinue) {
     Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
