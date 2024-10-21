@@ -140,7 +140,7 @@ function _fzf_open_path {
             if (Test-Path $InputPath -PathType Leaf) { $InputPath = Split-Path $InputPath -Parent }
             Set-Location $InputPath
         }
-        'nvim'   = { nvim $InputPath }
+        'vim'    = { vim $InputPath }
         'remove' = { Remove-Item -Recurse -Force $InputPath }
         'echo'   = { Write-Output $InputPath }
     }
