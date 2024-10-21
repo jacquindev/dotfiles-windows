@@ -7,7 +7,6 @@ $symlinks = @{
     "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"                          = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"               = ".\dotposh\Profile5.ps1"
     "$env:USERPROFILE\.gitconfig"                                                                 = '.\home\gitconfig'
-    "$env:USERPROFILE\.gitconfig_local"                                                           = '.\home\gitconfig_local'
     "$env:APPDATA\Code\User\settings.json"                                                        = '.\vscode\settings.json'
     "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" = '.\windows\settings.json'
     "$env:LOCALAPPDATA\fastfetch"                                                                 = '.\fastfetch'
@@ -41,8 +40,7 @@ foreach ($app in $WingetApps) {
 # Scoop packages (do not pollute your home!!)
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host 'Installing Scoop...' -ForegroundColor 'Green'
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    Invoke-Expression "& {$(Invoke-RestMethod -Uri get.scoop.sh)} -RunAsAdmin"
     scoop bucket add extras
 }
 $ScoopApps = @(
@@ -67,11 +65,11 @@ foreach ($app in $ScoopApps) {
     }
 }
 
-$ScoopGlobalApps = @('7zip', 'openssh')
+$ScoopGlobalApps = @('7zip', 'gh')
 foreach ($app in $ScoopGlobalApps) {
     if (!($(scoop info $app).Installed)) {
         Write-Host "Installing Scoop package $app globally..." -ForegroundColor 'Green'
-        sudo scoop install $app --global
+        scoop install $app --global
     }
 }
 
