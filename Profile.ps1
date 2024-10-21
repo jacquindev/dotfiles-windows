@@ -68,5 +68,3 @@ if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
     }
     fastfetch
 }
-
-
