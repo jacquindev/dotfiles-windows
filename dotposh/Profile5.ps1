@@ -1,7 +1,3 @@
-# Environment variables
-$Env:POSH_GIT_ENABLED = $true
-$Env:EDITOR = "code"
-
 # Modules
 $PoshModules = @(
     "BurntToast", "posh-alias", "posh-git", "PSCompletions", "PSReadLine", "Terminal-Icons"
@@ -13,9 +9,13 @@ foreach ($module in $PoshModules) {
     Import-Module -Name $module
 }
 
+# Environment variables
+$Env:POSH_GIT_ENABLED = $true
+$Env:EDITOR = "code"
+
 # Oh-My-Posh theme configuration
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    oh-my-posh init powershell --config "$Env:POSH_THEMES_PATH\bubblesextra.omp.json" | Invoke-Expression
+    oh-my-posh init powershell --config "$Env:POSH_THEMES_PATH\tokyonight_storm.omp.json" | Invoke-Expression
     oh-my-posh completion powershell | Out-String | Invoke-Expression
 }
 
@@ -82,3 +82,11 @@ Add-Alias downloads "Set-Location $env:USERPROFILE\Downloads"
 # Source: - https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
 Add-Alias reload '. $PROFILE'
 Add-Alias restart 'Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }'
+
+# Fastfetch
+if (Get-Command fastfetch -ErrorAction SilentlyContinue) {
+    if ([Environment]::GetCommandLineArgs().Contains("-NonInteractive")) {
+        Return
+    }
+    fastfetch
+}
