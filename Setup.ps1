@@ -4,6 +4,7 @@
 # Symlinks
 $symlinks = @{
     $PROFILE.CurrentUserAllHosts                                                                  = ".\Profile.ps1"
+    "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"                          = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"               = ".\dotposh\Profile5.ps1"
     "$env:USERPROFILE\.gitconfig"                                                                 = '.\home\gitconfig'
     "$env:USERPROFILE\.gitconfig_local"                                                           = '.\home\gitconfig_local'
