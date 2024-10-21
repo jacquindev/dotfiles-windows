@@ -1,15 +1,9 @@
-<#
-.SYNOPSIS
-    Setup dotfiles repos and install applications
-.DESCRIPTION
-    !! This script requires running on 'Developer Mode' !!
-    For more information, please check the link below:
-        - https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
-#>
+#requires -runasadministrator
+#requires -version 7
 
+# Symlinks
 $symlinks = @{
-    "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"                      = ".\Profile.ps1"
-    "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"                          = ".\Profile.ps1"
+    $PROFILE.CurrentUserAllHosts                                                                  = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1"               = ".\dotposh\Profile5.ps1"
     "$env:USERPROFILE\.gitconfig"                                                                 = '.\home\gitconfig'
     "$env:USERPROFILE\.gitconfig_local"                                                           = '.\home\gitconfig_local'

@@ -39,7 +39,7 @@ function Find-DotfilesRepo {
     )
 
     # Resolve the symbolic link of the profile
-    $profileSymlink = Get-ChildItem $ProfilePath | Where-Object FullName -EQ $PROFILE
+    $profileSymlink = Get-ChildItem $ProfilePath | Where-Object FullName -EQ $PROFILE.CurrentUserAllHosts
     return Split-Path $profileSymlink.Target
 }
 

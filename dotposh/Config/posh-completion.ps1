@@ -1,4 +1,6 @@
 # Azure PowerShell
+# For more information, please see:
+# - https://learn.microsoft.com/en-us/powershell/azure/az-predictor
 if (Get-Module -ListAvailable -Name Az) {
     if (-not (Get-Module -ListAvailable -Name Az.Tools.Predictor)) {
         Write-Host "Installing PowerShell Module Az.Tools.Predictor..." -ForegroundColor "Green"
