@@ -4,7 +4,7 @@ $Env:EDITOR = "code"
 
 # Modules
 $PoshModules = @(
-    "BurntToast", "posh-alias", "posh-git", "PSReadLine", "Terminal-Icons"
+    "BurntToast", "posh-alias", "posh-git", "PSCompletions", "PSReadLine", "Terminal-Icons"
 )
 foreach ($module in $PoshModules) {
     if (-not (Get-Module -ListAvailable -Name $module)) {
@@ -24,11 +24,6 @@ if (Get-Command gsudo -ErrorAction SilentlyContinue) {
     Import-Module "$($(Get-Item $(Get-Command gsudo.exe).Path).Directory.Parent.FullName)\current\gsudoModule.psd1"
 }
 
-# scoop module
-if (Get-Command scoop -ErrorAction SilentlyContinue) {
-    Import-Module "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.FullName)\modules\scoop-completion"
-}
-
 # PSReadLine configuration
 $PSROptions = @{
     BellStyle                     = "None"
@@ -45,27 +40,12 @@ $PSROptions = @{
     ExtraPromptLineCount          = $True
     HistoryNoDuplicates           = $True 
     HistorySearchCursorMovesToEnd = $True
-    PredictionSource              = "History"
-    PredictionViewStyle           = "ListView"
 }
 Set-PSReadLineOption @PSROptions
 
-# Command definitions
+# Aliases
 # curl
-if (Get-Command -Name curl.exe -ErrorAction SilentlyContinue) {
-    Remove-Item Alias:curl -Force
-}
-
-# eza
-if (Get-Command -Name eza.exe -ErrorAction SilentlyContinue) {
-    Remove-Item Alias:eza -Force
-
-    $_eza_params = @('--hyperlink', '--icons')
-
-    function ls($path) { & eza.exe $_eza_params $path }
-    function ll($path) { & eza.exe $_eza_params -l $path }
-    function l($path) { & eza.exe $_eza_params -la $path }
-}
+if (Get-Command -Name curl.exe -ErrorAction SilentlyContinue) { Remove-Item Alias:curl -Force }
 
 # cat
 if (Get-Command -Name bat.exe -ErrorAction SilentlyContinue) {
@@ -73,12 +53,32 @@ if (Get-Command -Name bat.exe -ErrorAction SilentlyContinue) {
     function cat($path) { & bat.exe $path }
 }
 
-# Aliases
 function which($name) { Get-Command $name | Select-Object -ExpandProperty Definition }
 function mkcd($path) { New-Item -Path $path -ItemType Directory; Set-Location -Path $path }
 function touch($file) { New-Item -ItemType File -Name $file -Path $PWD | Out-Null }
 function ff($term) { Get-ChildItem -Recurse -Filter "*$term*" -ErrorAction SilentlyContinue | Format-Table -AutoSize }
-function home { Set-Location -Path "$Env:USERPROFILE" }
-function downloads { Set-Location -Path "$Env:USERPROFILE\Downloads" }
-function docs { Set-Location -Path "$Env:USERPROFILE\Documents" }
-function desktop { Set-Location -Path "$Env:USERPROFILE\Desktop" }
+
+# eza
+if (Get-Command -Name eza.exe -ErrorAction SilentlyContinue) {
+    Remove-Item Alias:ls -Force
+
+    $_eza_params = "--icons --header --hyperlink --group --git"
+    Add-Alias ls "eza --hyperlink --icons"
+    Add-Alias la "eza $_eza_params -al --time-style=relative --sort=modified --group-directories-first"
+    Add-Alias ld "eza $_eza_params -lD --show-symlinks"                     # lists only directories
+    Add-Alias lf "eza $_eza_params -lfa --show-symlinks"                    # lists only files (included hidden files)
+    Add-Alias ll "eza $_eza_params -lbhHigUmuSa --group-directories-first"  # Lists everything in details of date             
+    Add-Alias lt "eza $_eza_params -lT"                                     # Tree view of detailed information
+    Add-Alias tree "eza $_eza_params --tree"                                # Tree view
+} 
+
+# common locations
+Add-Alias home "Set-Location $env:USERPROFILE"
+Add-Alias docs "Set-Location $env:USERPROFILE\Documents"
+Add-Alias desktop "Set-Location $env:USERPROFILE\Desktop"
+Add-Alias downloads "Set-Location $env:USERPROFILE\Downloads"
+
+# powershell reload /restart
+# Source: - https://stackoverflow.com/questions/11546069/refreshing-restarting-powershell-session-w-out-exiting
+Add-Alias reload '. $PROFILE'
+Add-Alias restart 'Get-Process -Id $PID | Select-Object -ExpandProperty Path | ForEach-Object { Invoke-Command { & "$_" } -NoNewScope }'
