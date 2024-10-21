@@ -63,6 +63,11 @@ if (Get-Command docker -ErrorAction SilentlyContinue) {
 
 # kubectl
 if (Get-Command kubectl -ErrorAction SilentlyContinue) {
-    Set-Alias -Name 'k' -Value 'kubectl'
     kubectl completion powershell | Out-String | Invoke-Expression
+    Set-Alias -Name 'k' -Value 'kubectl'
+    Register-ArgumentCompleter -CommandName k -ScriptBlock $__kubectlCompleterBlock
+    
+    if (Test-Path -Path "$Env:DOTPOSH\Config\kubectl-aliases-powershell\kubectl_aliases.ps1") {
+        . "$Env:DOTPOSH\Config\kubectl-aliases-powershell\kubectl_aliases.ps1"
+    }
 }
