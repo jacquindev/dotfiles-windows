@@ -1,3 +1,4 @@
 *.log
 
 gitconfig_local
+wslconfig
