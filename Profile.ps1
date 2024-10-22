@@ -1,6 +1,24 @@
 # Tls12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+# Environment variables
+$Env:DOTFILES = Split-Path (Get-ChildItem $PSScriptRoot | Where-Object FullName -EQ $PROFILE.CurrentUserAllHosts).Target
+$Env:DOTPOSH = "$Env:DOTFILES\dotposh"
+$Env:POSH_GIT_ENABLED = $True 
+$Env:GIT_SSH = Split-Path (Get-Command ssh.exe).Path
+$Env:EDITOR = "code"
+
+# Prompt Configuration (oh-my-posh)
+if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
+    Set-Alias -Name 'omp' -Value 'oh-my-posh'
+    omp init pwsh --config "$Env:DOTPOSH\.posh-custom.omp.json" | Invoke-Expression
+    # Add oh-my-posh completion
+    omp completion powershell | Out-String | Invoke-Expression
+}
+
+# Alias for git (execute before import module)
+Set-Alias -Name 'g' -Value 'git'
+
 # PowerShell Modules
 $PoshModules = @(
     "BurntToast",
@@ -31,37 +49,11 @@ if (Get-Command gsudo -ErrorAction SilentlyContinue) {
     Import-Module "$gsudoPath\gsudoModule.psd1"
 }
 
-# Helper function to find dotfiles location
-function Find-DotfilesRepo {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $True, Position = 0)]
-        [string]$ProfilePath
-    )
-
-    # Resolve the symbolic link of the profile
-    $profileSymlink = Get-ChildItem $ProfilePath | Where-Object FullName -EQ $PROFILE.CurrentUserAllHosts
-    return Split-Path $profileSymlink.Target
-}
-
-# Environment Variables
-$Env:DOTFILES = Find-DotfilesRepo -ProfilePath $PSScriptRoot
-$Env:DOTPOSH = "$Env:DOTFILES\dotposh"
-$Env:POSH_GIT_ENABLED = $True
-$Env:GIT_SSH = "C:\Windows\System32\OpenSSH\ssh.exe"
-$Env:EDITOR = "code"
-
-# Prompt Configuration (oh-my-posh)
-if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
-    oh-my-posh init pwsh --config "$Env:DOTPOSH\.posh-custom.omp.json" | Invoke-Expression
-    # Add oh-my-posh completion
-    oh-my-posh completion powershell | Out-String | Invoke-Expression
-}
-
 # Custom functions
 foreach ($file in (Get-ChildItem -Path "$Env:DOTPOSH\*\*" -Include *.ps1 -Recurse)) {
     . $file
 }
+Remove-Variable file
 
 # Fastfetch
 if (Get-Command fastfetch -ErrorAction SilentlyContinue) {

@@ -115,6 +115,7 @@ function Get-CommandInfo {
 
 # Aliases
 # ----------------------------------------------------------------
+Remove-Item Alias:rm -Force
 # general
 Set-Alias -Name 'aliases' -Value 'Get-Aliases'
 Set-Alias -Name 'ff' -Value 'Find-File'
@@ -172,10 +173,9 @@ Add-Alias hibernate 'shutdown.exe /h'
 Add-Alias shutdown 'Stop-Computer'
 Add-Alias reboot 'Restart-Computer'
 
-Add-Alias mnts 'Get-Mounts'
 Add-Alias paths '$env:PATH -Split ";"'
 Add-Alias envs 'Set-Location Env:; Get-ChildItem'
 Add-Alias profiles 'Get-PSProfile {$_.exists -eq "True"} | Format-List'
 
-# Add-Alias HKLM: 'Set-Location HKLM:'
-# Add-Alias HKCU: 'Set-Location HKCU:'
+Add-Alias HKLM: 'Set-Location HKLM:'
+Add-Alias HKCU: 'Set-Location HKCU:'
