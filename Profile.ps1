@@ -5,7 +5,6 @@
 $Env:DOTFILES = Split-Path (Get-ChildItem $PSScriptRoot | Where-Object FullName -EQ $PROFILE.CurrentUserAllHosts).Target
 $Env:DOTPOSH = "$Env:DOTFILES\dotposh"
 $Env:POSH_GIT_ENABLED = $True 
-$Env:GIT_SSH = Split-Path (Get-Command ssh.exe).Path
 $Env:EDITOR = "code"
 
 # Prompt Configuration (oh-my-posh)
