@@ -1,3 +1,4 @@
+#requires -Version 7
 <#
 .SYNOPSIS
     Setup Windows machine script.
@@ -58,11 +59,7 @@ if (!($(scoop bucket list).Name -eq "extras")) {
     scoop bucket add extras
 }
 
-$ScoopGlobalApps = @(
-    '7zip', 
-    'gh'
-    # TODO: Add more global apps as needed here
-)
+$ScoopGlobalApps = @('7zip', 'gh', 'sysinternals')
 foreach ($app in $ScoopGlobalApps) {
     if (!($(scoop info $app).Installed)) {
         Write-Host "Installing Scoop package $app globally..." -ForegroundColor "Green"
@@ -97,9 +94,46 @@ foreach ($app in $ScoopApps) {
     }
 }
 
+# PowerShell modules to install
+$PoshModules = @(
+    "BetterCredentials",
+    "BurntToast",
+    "CompletionPredictor",
+    "DotNetVersionLister",
+    "Microsoft.PowerShell.Crescendo",
+    "Microsoft.PowerShell.SecretManagement",
+    "Microsoft.PowerShell.SecretStore",
+    "Microsoft.WinGet.Client",
+    "posh-alias",
+    "posh-git",
+    "powershell-yaml",
+    "PSFzf",
+    "PSParseHTML",
+    "PSProfiler",
+    "PSScriptTools",
+    "PSWebSearch",
+    "Terminal-Icons"
+)
+if (!(Get-PackageProvider -Name "NuGet" -ErrorAction Ignore)) {
+    Write-Host "Installing NuGet PackageProvider..." -ForegroundColor "Green"
+    Install-PackageProvider -Name "NuGet" -Force
+}
+if ((Get-PSRepository -Name "PSGallery").InstallationPolicy -notlike "Trusted") {
+    Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+}
+foreach ($module in $PoshModules) {
+    if (!(Get-InstalledModule -Name $module -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing PowerShell module $module..." -ForegroundColor 'Green'
+        Install-Module $module -AllowClobber -AcceptLicense -Scope CurrentUser -Force
+    }
+}
+$modulesOutputFile = Get-InstalledModule | Select-Object Name, Version, Author, InstalledDate, Description |
+ConvertTo-Json -Depth 100 | Out-File "$PSScriptRoot\modules.lock.json" -Encoding utf8 -Force
+return $modulesOutputFile
+
 # Symlinks
 $symlinks = @{
-    "$env:USERPROFILE\Documents\PowerShell\profile.ps1"                                           = ".\Profile.ps1"
+    $PROFILE.CurrentUserAllHosts                                                                  = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"                          = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"                                    = ".\dotposh\Profile5.ps1"
     "$env:USERPROFILE\.gitconfig"                                                                 = '.\home\gitconfig'
