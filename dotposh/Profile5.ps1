@@ -46,3 +46,25 @@ if (Get-Command gsudo -ErrorAction SilentlyContinue) {
 if (Test-Path "$Env:DOTPOSH\Config\posh-aliases.ps1") {
     . "$Env:DOTPOSH\Config\posh-aliases.ps1"
 }
+
+# PSReadline configuration
+$PSROptions = @{
+    Colors                        = @{
+        "Command"   = [ConsoleColor]::Green
+        "Parameter" = [ConsoleColor]::Gray
+        "Operator"  = [ConsoleColor]::Magenta
+        "Variable"  = [ConsoleColor]::White
+        "String"    = [ConsoleColor]::Yellow
+        "Number"    = [ConsoleColor]::Blue
+        "Type"      = [ConsoleColor]::Cyan
+        "Comment"   = [ConsoleColor]::DarkCyan
+    }
+    BellStyle                     = "None"
+    ExtraPromptLineCount          = $True
+    HistoryNoDuplicates           = $True
+    HistorySearchCursorMovesToEnd = $True
+    MaximumHistoryCount           = 4096
+    PredictionSource              = "History"
+    PredictionViewStyle           = "ListView"
+}
+Set-PSReadLineOption @PSROptions

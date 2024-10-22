@@ -28,6 +28,7 @@ $WingetApps = @(
     'Microsoft.VisualStudioCode',
     'Ookla.Speedtest.Desktop',
     'Proton.ProtonVPN',
+    #'PuTTY.PuTTY',
     'Spotify.Spotify'
 )
 $installedWingetApps = winget list | Out-String

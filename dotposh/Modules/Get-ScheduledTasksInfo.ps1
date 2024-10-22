@@ -21,6 +21,15 @@ function Get-ScheduledTasksInfo {
     }
 }
 
+function Get-ScheduledTaskDetail {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [string]$Name
+    )
+    Get-ScheduledTask -TaskName $Name | Format-List
+}
+
 function Invoke-ScheduledTasks-Running {
     Get-ScheduledTasksInfo -Running
 }
@@ -36,3 +45,4 @@ function Invoke-ScheduledTasks-Disabled {
 Set-Alias -Name 'tasks-running' -Value 'Invoke-ScheduledTasks-Running'
 Set-Alias -Name 'tasks-ready' -Value 'Invoke-ScheduledTasks-Ready'
 Set-Alias -Name 'tasks-disabled' -Value 'Invoke-ScheduledTasks-Disabled'
+Set-Alias -Name 'task' -Value 'Get-ScheduledTaskDetail'
