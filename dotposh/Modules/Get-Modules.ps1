@@ -22,14 +22,14 @@ function Get-Modules {
     )
 
     if ($PSBoundParameters.Count -eq 0) {
-        $result = Get-InstalledModule | Select-Object Name, Version, Author, Description | Format-Table -AutoSize
+        $result = Get-InstalledModule | Select-Object Name, Version, Author, InstalledDate, Description | Format-Table -AutoSize
     }
 
     if ($output) {
         $result = Get-InstalledModule |
-        Select-Object Name, Version, Author, CompanyName, Description |
+        Select-Object Name, Version, Author, InstalledDate, Description |
         ConvertTo-Json -Depth 100 |
-        Out-File "$Env:DOTFILES\modules.lock.json" -Encoding utf8
+        Out-File "$Env:DOTFILES\modules.lock.json" -Encoding utf8 -Force
     }
 
     if ($list) {
@@ -37,7 +37,7 @@ function Get-Modules {
             $result = Get-Content "$Env:DOTFILES\modules.lock.json" | ConvertFrom-Json | Format-Table -AutoSize
         }
         else {
-            $result = Get-InstalledModule | Select-Object Name, Version, Author, Description | Format-Table -AutoSize
+            $result = Get-InstalledModule | Select-Object Name, Version, Author, InstalledDate, Description | Format-Table -AutoSize
         }
     }
 
