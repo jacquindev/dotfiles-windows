@@ -13,7 +13,7 @@
 [difftool "default-difftool"]
     cmd = code --wait --diff $LOCAL $REMOTE
 [include]
-    path = ~/.gitconfig_local
+    path = ~/.gitconfig-local
 [help]
     autocorrect = -1
 [log]
@@ -31,10 +31,7 @@
     enabled = true
     autoUpdate = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[user]
-	name = Jacquin Moon
-	email = jacquindev@outlook.com
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
