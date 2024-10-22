@@ -20,19 +20,16 @@ Set-Alias -Name 'g' -Value 'git'
 
 # PowerShell Modules
 $PoshModules = @(
-    "BurntToast",
     "CompletionPredictor",
     "posh-alias",
     "posh-git",
     "PSFzf",
     "PSParseHTML",
-    "PSProfiler",
-    "PSScriptTools",
-    "PSWebSearch",
     "Terminal-Icons",
     "Microsoft.PowerShell.SecretManagement",
     "Microsoft.PowerShell.SecretStore"
 )
+
 foreach ($module in $PoshModules) {
     if (!(Get-InstalledModule -Name $module -ErrorAction SilentlyContinue)) {
         Write-Host "Installing PowerShell Module $module..." -ForegroundColor "Green"

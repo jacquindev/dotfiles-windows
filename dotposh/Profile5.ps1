@@ -9,7 +9,7 @@
 #>
 
 # Environment variables
-$Env:DOTPOSH = Split-Path (Get-ChildItem $PSScriptRoot | Where-Object FullName -EQ $PROFILE).Target
+$Env:DOTPOSH = Split-Path (Get-ChildItem $PSScriptRoot | Where-Object FullName -EQ $PROFILE.CurrentUserAllHosts).Target
 $Env:POSH_GIT_ENABLED = $True 
 $Env:EDITOR = "code"
 
