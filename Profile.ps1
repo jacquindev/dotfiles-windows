@@ -27,7 +27,8 @@ Remove-Variable module, PoshModules
 
 # gsudo module
 if (Get-Command gsudo -ErrorAction SilentlyContinue) {
-    Import-Module "$($(Get-Item $(Get-Command gsudo.exe).Path).Directory.Parent.FullName)\current\gsudoModule.psd1"
+    $gsudoPath = Split-Path (Get-Command gsudo.exe).Path
+    Import-Module "$gsudoPath\gsudoModule.psd1"
 }
 
 # Helper function to find dotfiles location
@@ -47,6 +48,7 @@ function Find-DotfilesRepo {
 $Env:DOTFILES = Find-DotfilesRepo -ProfilePath $PSScriptRoot
 $Env:DOTPOSH = "$Env:DOTFILES\dotposh"
 $Env:POSH_GIT_ENABLED = $True
+$Env:GIT_SSH = "C:\Windows\System32\OpenSSH\ssh.exe"
 $Env:EDITOR = "code"
 
 # Prompt Configuration (oh-my-posh)
