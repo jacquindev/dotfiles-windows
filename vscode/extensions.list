@@ -16,8 +16,14 @@ formulahendry.code-runner
 foxundermoon.shell-format
 github.codespaces
 github.github-vscode-theme
+mechatroner.rainbow-csv
+ms-vscode-remote.remote-containers
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-ssh-edit
+ms-vscode-remote.remote-wsl
 ms-vscode.cpptools-themes
 ms-vscode.powershell
+ms-vscode.remote-explorer
 oderwat.indent-rainbow
 pkief.material-icon-theme
 redhat.vscode-yaml
