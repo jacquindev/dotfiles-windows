@@ -1,3 +1,7 @@
+# Encoding UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # Tls12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -26,7 +30,7 @@ $PoshModules = @(
     "PSFzf",
     "PSParseHTML",
     "Terminal-Icons",
-    "Microsoft.PowerShell.SecretManagement",
+    "Microsoft.PowerShell.SecretManagement"
     "Microsoft.PowerShell.SecretStore"
 )
 

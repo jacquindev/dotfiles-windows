@@ -1,0 +1,18 @@
+# oh-my-posh
+eval "$(oh-my-posh init bash --config $POSH_THEMES_PATH/craver.omp.json)"
+
+# general aliases
+alias reload="exec $SHELL -l"
+
+# eza
+alias ls="eza --hyperlink --icons"
+alias la="eza --icons --header --hyperlink --group --git -al --time-style=relative --sort=modified --group-directories-first"
+alias ld="eza --icons --header --hyperlink --group --git -lD --show-symlinks"
+alias lf="eza --icons --header --hyperlink --group --git -lfa --show-symlinks"
+alias ll="eza --icons --header --hyperlink --group --git -lbhHigUmuSa --group-directories-first"
+alias tree="eza --icons --header --hyperlink --group --git --tree"
+
+# gsudo wrapper
+gsudo() {
+    WSLENV=WSL_DISTRO_NAME:USER:$WSLENV MSYS_NO_PATHCONV=1 gsudo.exe "$@"
+}

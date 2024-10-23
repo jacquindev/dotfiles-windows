@@ -17,19 +17,31 @@ function Get-OrCreateSecret {
 
     #requires -Module Microsoft.PowerShell.SecretManagement
     #requires -Module Microsoft.PowerShell.SecretStore
-
+    
     [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $True)]
+    param (
+        [Parameter(Mandatory = $true)]
+        [Alias('name')]
         [string]$SecretName
     )
 
-    $securePasswordPath = Read-Host "Input the location you stored password"
-    if (Test-Path $securePasswordPath) {
-        $myPassword = Import-CliXml -Path $securePasswordPath
+    $secretFolder = "$(Split-Path $env:DOTFILES)\secrets"
+    if (Test-Path "$secretFolder\secrets.xml") {
+        $secretSecurePath = "$secretFolder\secrets.xml"
+    }
+    else {
+        $secretSecurePath = Read-Host "Enter the path you stored decrypted password file"
+    }
+
+    if (Test-Path $secretSecurePath) {
+        $myPassword = Import-Clixml -Path $secretSecurePath
         Unlock-SecretStore -Password $myPassword
     }
 
+    ''
+    Write-Host "Retrieve secret" -ForegroundColor "Blue" -NoNewline
+    Write-Host " $SecretName " -ForegroundColor "White" -NoNewline
+    Write-Host "from local vault..." -ForegroundColor "Blue"
     $SecretValue = Get-Secret $SecretName -AsPlainText -ErrorAction SilentlyContinue
 
     if (!$SecretValue) {
@@ -44,5 +56,6 @@ function Get-OrCreateSecret {
             throw "Secret not found and not created. Exiting."
         }
     }
+    ''
     return $SecretValue
 }

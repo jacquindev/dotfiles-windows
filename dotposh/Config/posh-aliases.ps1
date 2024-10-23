@@ -138,6 +138,9 @@ Add-Alias lt "eza $_eza_params -lT"                                     # Tree v
 Add-Alias tree "eza $_eza_params --tree"                                # Tree view
 
 # ----------------------------------------------------------------
+# windows file explorer
+Add-Alias e 'Invoke-Item .'
+
 # common locations
 Add-Alias dotf "Set-Location $env:DOTFILES"
 Add-Alias dotp "Set-Location $env:DOTPOSH"
@@ -174,8 +177,13 @@ Add-Alias shutdown 'Stop-Computer'
 Add-Alias reboot 'Restart-Computer'
 
 Add-Alias paths '$env:PATH -Split ";"'
-Add-Alias envs 'Set-Location Env:; Get-ChildItem'
+Add-Alias envs 'Get-ChildItem Env:'
 Add-Alias profiles 'Get-PSProfile {$_.exists -eq "True"} | Format-List'
 
 Add-Alias HKLM: 'Set-Location HKLM:'
 Add-Alias HKCU: 'Set-Location HKCU:'
+
+# ----------------------------------------------------------------
+# winget-list: list packages installed via winget with source from winget
+# For more info: - https://github.com/microsoft/winget-cli/issues/1155
+Add-Alias winget-list 'Get-WinGetPackage | Where-Object { ($_.Source -eq "winget") } | Sort-Object ID'

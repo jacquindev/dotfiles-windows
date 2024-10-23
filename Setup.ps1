@@ -27,6 +27,7 @@ $WingetApps = @(
     'Microsoft.PowerShell',
     'Microsoft.PowerToys',
     'Microsoft.VisualStudioCode',
+    'Notepad++.Notepad++',
     'Ookla.Speedtest.Desktop',
     'Proton.ProtonVPN',
     #'PuTTY.PuTTY',
@@ -54,9 +55,16 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
 }
 
 # Scoop buckets
-if (!($(scoop bucket list).Name -eq "extras")) {
-    Write-Host "Adding Scoop Bucket extras..." -ForegroundColor "Green"
-    scoop bucket add extras
+$BucketsList = @(
+    'extras',
+    'versions'
+    # 'insomnia https://github.com/insomnimus/scoop-bucket'
+)
+foreach ($bucket in $BucketsList) {
+    if (!($(scoop bucket list).Name -eq "$bucket")) {
+        Write-Host "Adding Scoop Bucket $bucket..." -ForegroundColor "Green"
+        scoop bucket add "$bucket"
+    }
 }
 
 $ScoopGlobalApps = @('7zip', 'gh', 'sysinternals')
@@ -100,6 +108,7 @@ $PoshModules = @(
     "BurntToast",
     "CompletionPredictor",
     "DotNetVersionLister",
+    "ImportExcel",
     "Microsoft.PowerShell.Crescendo",
     "Microsoft.PowerShell.SecretManagement",
     "Microsoft.PowerShell.SecretStore",
@@ -108,6 +117,7 @@ $PoshModules = @(
     "posh-git",
     "powershell-yaml",
     "PSFzf",
+    "PSGitHub",
     "PSParseHTML",
     "PSProfiler",
     "PSScriptTools",
@@ -137,6 +147,7 @@ $symlinks = @{
     "$env:USERPROFILE\Documents\PowerShell\Microsoft.VSCode_profile.ps1"                          = ".\Profile.ps1"
     "$env:USERPROFILE\Documents\WindowsPowerShell\profile.ps1"                                    = ".\dotposh\Profile5.ps1"
     "$env:USERPROFILE\.gitconfig"                                                                 = '.\home\gitconfig'
+    "$env:USERPROFILE\.bashrc"                                                                    = ".\home\bashrc"
     "$env:APPDATA\Code\User\settings.json"                                                        = '.\vscode\settings.json'
     "$env:APPDATA\bat"                                                                            = ".\bat"
     "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" = '.\windows\settings.json'
